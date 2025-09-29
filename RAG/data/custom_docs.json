@@ -1,0 +1,18 @@
+{
+  "articles": [
+    {
+      "title": "Deep Learning",
+      "text": "Deep Learning là một phần của machine learning sử dụng mạng neural nhân tạo với nhiều lớp ẩn để học và đưa ra quyết định. Nó có khả năng xử lý dữ liệu phi cấu trúc như hình ảnh, âm thanh và văn bản."
+    },
+    {
+      "title": "Computer Vision", 
+      "text": "Computer Vision là lĩnh vực cho phép máy tính hiểu và phân tích hình ảnh và video. Nó sử dụng các thuật toán để nhận diện đối tượng, phân loại hình ảnh và theo dõi chuyển động."
+    }
+  ],
+  "tutorials": [
+    {
+      "subject": "Python Programming",
+      "description": "Python là ngôn ngữ lập trình bậc cao, dễ học và mạnh mẽ. Nó được sử dụng rộng rãi trong phát triển web, khoa học dữ liệu, trí tuệ nhân tạo và nhiều lĩnh vực khác."
+    }
+  ]
+}
