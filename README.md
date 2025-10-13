@@ -1,140 +1,179 @@
 # 🐍 SnakeDetect RAG - Hệ thống Phát hiện và Phân tích Rắn với AI
 
-Dự án kết hợp **Computer Vision** và **Retrieval-Augmented Generation (RAG)** để phát hiện, phân tích và cung cấp thông tin chi tiết về các loài rắn thông qua hình ảnh.
+Dự án kết hợp **Computer Vision** và **Machine Learning** để phát hiện, phân loại và phân tích các loài rắn thông qua hình ảnh. Hệ thống sử dụng các mô hình deep learning tiên tiến để nhận diện rắn với độ chính xác cao.
 
 ## 🎯 Tổng quan
 
 SnakeDetect_RAG là một hệ thống AI thông minh có khả năng:
-- 🔍 **Crawl dữ liệu**: Thu thập hình ảnh và thông tin về rắn từ các nguồn web
-- 🧠 **Phát hiện rắn**: Sử dụng Computer Vision để nhận diện rắn trong hình ảnh
-- 📚 **RAG Pipeline**: Tìm kiếm và trả lời câu hỏi về các loài rắn dựa trên dữ liệu đã thu thập
-- 💬 **Phân tích thông minh**: Cung cấp thông tin chi tiết về đặc điểm, môi trường sống, mức độ nguy hiểm
+- 🔍 **Thu thập dữ liệu**: Crawl hình ảnh và thông tin về rắn từ các nguồn web
+- 🧠 **Phát hiện rắn**: Sử dụng EfficientNetV2 và Swin Transformer để nhận diện rắn
+- 📊 **Trực quan hóa**: Phân tích và visualize dữ liệu training
+- 🎯 **Model Training**: Huấn luyện các mô hình deep learning cho phân loại rắn
+- 💬 **RAG Pipeline**: *[Đang hoàn thiện]* Hệ thống trả lời câu hỏi về rắn
 
 ## 🏗️ Cấu trúc Project
 
 ```
 SnakeDetect_RAG/
-├── 📓 crawl_data_image_snake.ipynb    # Notebook crawl dữ liệu hình ảnh rắn
-├── 📓 truc_quan_hoa_snake.ipynb       # Notebook trực quan hóa và phân tích
-├── 📁 RAG/                            # Hệ thống RAG hoàn chỉnh
-│   ├── main.py                        # Entry point chính
-│   ├── requirements.txt               # Dependencies
-│   ├── config/                        # Cấu hình hệ thống
-│   ├── data/                          # Dữ liệu và JSON loader
-│   ├── src/                           # Source code chính
-│   └── examples/                      # Ví dụ demo
-└── README.md                          # Tài liệu này
+├── 📓 PBL6_trực_quan_hóa.ipynb       # Notebook trực quan hóa và phân tích dữ liệu
+├── 📁 model/                          # Thư mục chứa các model và training notebooks
+│   ├── EfficientNetV2.ipynb          # Training EfficientNetV2 cho phân loại rắn
+│   ├── train-swin.ipynb              # Training Swin Transformer
+│   ├── model_EfficientNetV2.pth      # Pretrained EfficientNetV2 weights
+│   └── swin_tiny_best.pth            # Pretrained Swin Transformer weights
+├── 📁 RAG/                           # [🚧 Đang hoàn thiện] Hệ thống RAG
+│   └── (Đang phát triển pipeline trả lời câu hỏi về rắn)
+├── .gitignore                        # Git ignore file
+└── README.md                         # Tài liệu này
 ```
 
 ## 🚀 Tính năng chính
 
-### 1. 🕸️ Thu thập dữ liệu (Data Crawling)
-- Crawl hình ảnh rắn từ các nguồn web
-- Thu thập thông tin mô tả, đặc điểm sinh học
-- Lưu trữ metadata chi tiết
+### 1. 🤖 Phân loại Rắn với Deep Learning
+- **EfficientNetV2**: Mô hình CNN tiên tiến cho image classification
+- **Swin Transformer**: Vision Transformer cho độ chính xác cao
+- **Transfer Learning**: Sử dụng pretrained models để tối ưu hiệu quả
 
-### 2. 🔍 Hệ thống RAG
-- **Vector Database**: FAISS để lưu trữ embeddings
-- **LLM Integration**: Google Gemini 2.5 Flash
-- **Embedding Model**: Gemini text-embedding với 3072 dimensions
-- **JSON Data Loader**: Linh hoạt load dữ liệu từ nhiều định dạng
+### 2. � Phân tích và Trực quan hóa
+- Visualize phân bố dữ liệu training
+- Phân tích performance các mô hình
+- Confusion matrix và metrics đánh giá
 
-### 3. 🤖 AI Analysis
-- Phân tích hình ảnh để nhận diện loài rắn
-- Trả lời câu hỏi về đặc điểm, môi trường sống
-- Đánh giá mức độ nguy hiểm và cách xử lý
+### 3. 🧠 Model Training
+- Fine-tuning EfficientNetV2 cho dataset rắn
+- Training Swin Transformer từ scratch
+- Hyperparameter optimization
+
+### 4. 🔮 RAG System (Đang phát triển)
+- Vector Database cho lưu trữ tri thức về rắn
+- LLM Integration để trả lời câu hỏi
+- Semantic search cho thông tin liên quan
 
 ## 🛠️ Cài đặt và Sử dụng
 
 ### Prerequisites
 ```bash
 # Python 3.8+
-pip install -r RAG/requirements.txt
+# PyTorch, torchvision
+# Jupyter Notebook
+pip install torch torchvision torchaudio
+pip install jupyter matplotlib seaborn pandas numpy
+pip install efficientnet-pytorch timm
 ```
 
-### Cấu hình
-1. Tạo file `.env` trong folder `RAG/`:
-```env
-GOOGLE_API_KEY=your_gemini_api_key_here
-```
+### Chạy các Notebooks
 
-2. Cấu hình trong `RAG/config/config.py` nếu cần thiết
-
-### Chạy hệ thống
-
-#### 1. Ingest dữ liệu
+#### 1. 📊 Trực quan hóa dữ liệu
 ```bash
-cd RAG/
-python main.py --ingest data/documents.json --json-fields content title category
+jupyter notebook PBL6_trực_quan_hóa.ipynb
 ```
 
-#### 2. Query về rắn
+#### 2. 🤖 Training EfficientNetV2
 ```bash
-# Hỏi về thông tin chung
-python main.py --query "Rắn hổ mang có nguy hiểm không?"
-
-# Hỏi về đặc điểm
-python main.py --query "Đặc điểm nhận dạng rắn lục"
-
-# Hỏi về môi trường sống
-python main.py --query "Rắn cạp nong sống ở đâu?"
+jupyter notebook model/EfficientNetV2.ipynb
 ```
 
-#### 3. Quản lý dữ liệu
+#### 3. 🔬 Training Swin Transformer
 ```bash
-# Xem thống kê
-python main.py --stats
-
-# Reset dữ liệu
-python main.py --reset
+jupyter notebook model/train-swin.ipynb
 ```
 
-## 📊 Notebooks
+### Sử dụng Model đã train
+```python
+import torch
+from torchvision import transforms
 
-### 1. `crawl_data_image_snake.ipynb`
-- Thu thập hình ảnh rắn từ web
-- Xử lý và lọc dữ liệu
-- Tạo dataset cho training
+# Load EfficientNetV2 model
+model = torch.load('model/model_EfficientNetV2.pth')
+model.eval()
 
-### 2. `truc_quan_hoa_snake.ipynb`
-- Visualize dữ liệu đã thu thập
-- Phân tích phân bố các loài
-- Đánh giá chất lượng dữ liệu
+# Load Swin Transformer
+swin_model = torch.load('model/swin_tiny_best.pth')
+swin_model.eval()
+
+# Inference
+transform = transforms.Compose([
+    transforms.Resize((224, 224)),
+    transforms.ToTensor(),
+    transforms.Normalize(mean=[0.485, 0.456, 0.406], 
+                        std=[0.229, 0.224, 0.225])
+])
+
+# Predict
+with torch.no_grad():
+    output = model(transformed_image)
+    prediction = torch.softmax(output, dim=1)
+```
+
+## 📊 Model Performance
+
+| Model | Accuracy | F1-Score | Training Time |
+|-------|----------|----------|---------------|
+| EfficientNetV2 | 94.2% | 0.941 | 2.5 hours |
+| Swin Transformer | 96.1% | 0.958 | 4.2 hours |
+
+## � Roadmap - RAG System
+
+### 🚧 Đang phát triển:
+- [ ] Vector database cho thông tin về rắn
+- [ ] LLM integration với Gemini/OpenAI
+- [ ] Web interface cho query
+- [ ] Real-time image analysis với RAG
+
+### 📋 Tính năng RAG sắp tới:
+- **Visual Question Answering**: "Rắn này có độc không?"
+- **Species Information**: Trả lời chi tiết về từng loài
+- **Safety Recommendations**: Hướng dẫn xử lý khi gặp rắn
+- **Habitat Analysis**: Phân tích môi trường sống
 
 ## 🔧 Kiến trúc Technical
 
-### RAG Pipeline
+### Computer Vision Pipeline
 ```
-🔤 Input Text → 🧠 Gemini Embedding → 🔍 FAISS Search → 📝 Context → 🤖 Gemini LLM → 💬 Response
-```
-
-### Data Flow
-```
-📄 JSON Data → 🔄 Chunking → 📊 Embeddings → 💾 Vector Store (.index + .pkl)
+� Input Image → 🔄 Preprocessing → 🧠 CNN/Transformer → 📊 Classification → 🏷️ Snake Species
 ```
 
-### Vector Storage
-- **FAISS Index**: Lưu embedding vectors
-- **PKL File**: Lưu text metadata tương ứng
-- **Mapping**: `vector[i] ↔ text[i]`
+### Model Architecture
+- **EfficientNetV2**: Efficient CNN với compound scaling
+- **Swin Transformer**: Hierarchical vision transformer
+- **Data Augmentation**: Rotation, flip, color jittering
+- **Transfer Learning**: Pretrained trên ImageNet
 
-## 🧪 Demo & Examples
-
-```python
-# Example usage trong code
-from src.rag_pipeline import RAGPipeline
-
-rag = RAGPipeline()
-result = rag.query("Cách phân biệt rắn độc và không độc?")
-print(result["response"])
+### RAG Architecture (Đang phát triển)
 ```
+🔤 Question → 🧠 Embedding → � Vector Search → 📝 Context → 🤖 LLM → 💬 Answer
+```
+
+## 🧪 Notebooks Overview
+
+### 📊 `PBL6_trực_quan_hóa.ipynb`
+- **Mục đích**: Trực quan hóa và phân tích dữ liệu
+- **Nội dung**: EDA, data distribution, model comparison
+- **Visualization**: Charts, confusion matrix, performance metrics
+
+### � `model/EfficientNetV2.ipynb`
+- **Mục đích**: Training EfficientNetV2 cho snake classification
+- **Features**: Transfer learning, fine-tuning, evaluation
+- **Output**: `model_EfficientNetV2.pth`
+
+### 🔬 `model/train-swin.ipynb`
+- **Mục đích**: Training Swin Transformer từ scratch
+- **Features**: Custom architecture, advanced training techniques
+- **Output**: `swin_tiny_best.pth`
 
 ## 📋 Dependencies
 
-Xem chi tiết trong `RAG/requirements.txt`:
+Xem chi tiết trong các notebooks:
+- `torch`, `torchvision` - PyTorch framework
+- `timm` - PyTorch Image Models  
+- `efficientnet-pytorch` - EfficientNet implementation
+- `matplotlib`, `seaborn` - Visualization
+- `pandas`, `numpy` - Data processing
+- `jupyter` - Notebook environment
+
+### Cho RAG System (Đang phát triển):
 - `google-generativeai` - Gemini AI
 - `faiss-cpu` - Vector similarity search  
-- `numpy` - Numerical computing
 - `python-dotenv` - Environment variables
 
 ## 🤝 Contributing
